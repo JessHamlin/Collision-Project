@@ -5,91 +5,93 @@
 #include <sstream>
 using namespace std;
 
-map::map(int x, int y)
+map::map(bool type, int level)
 {
-  for (int i = 0; i < y; i++)
+  this->type = type;
+  ////
+  string fileStr;
+  ifstream file;
+  if (level == 1)
+  file.open("lvlA.txt");
+  if (level == 2)
+  file.open("lvlB.txt");
+  if (level == 3)
+  file.open("lvlC.txt");
+  if (file.is_open())
   {
-    vector<char> temp;
-    for (int j = 0; j < x; j++)
+    string fileStrB;
+    while (getline(file,fileStr))
     {
-      temp.push_back(' ');//219 = block
+      vector<bool> temp;
+      stringstream ss(fileStr);
+      while (getline(ss,fileStrB,' '))
+      {
+        if (stoi(fileStrB) == 0)
+        {
+          temp.push_back(false);
+        }
+        if (stoi(fileStrB) == 1)
+        {
+          temp.push_back(true);
+        }
+      }
+      deleteMe.push_back(temp);
     }
-    grid.push_back(temp);
   }
-  sizeX = x;
-  sizeY = y;
+  else
+  {
+    cout << "Error opening file" << endl;
+  }
 }
-map::map()
+map::~map()
 {
-  sizeX = 0;
-  sizeY = 0;
+
 }
-char map::getVal(int x, int y)
+bool map::getCollisionQuatTree(int x, int y) //TODO
 {
-  return grid[x][y];
+  return deleteMe[y][x];
 }
-void map::setVal(int x, int y, bool v)
+bool map::getCollisionHashTable(int x, int y) // TODO
 {
-  if (v == false)
-  grid[x][y] = ' ';
-  if (v == true)
-  grid[x][y] = 219;
+  return deleteMe[y][x];
 }
-void map::print()
+void map::printQT(int x, int y)
+{
+  string str = "";
+  for (int i = 0; i < sizeY; i++)
+  {
+    for (int j = 0; j < sizeX; j++)
+    {
+      if ((i == y && j == x) || (getCollisionQuatTree(j,i) == true))
+      {
+        char c = 219;
+        str = str + c;
+      }
+      else
+      {
+        str = str + ' ';
+      }
+    }
+    str = str + "\n";
+  }
+  cout << str;
+}
+void map::printHT(int x, int y)
 {
   for (int i = 0; i < sizeY; i++)
   {
     for (int j = 0; j < sizeX; j++)
     {
-      cout << getVal(i,j);
+      if ((i == y && j == x) || (getCollisionHashTable(j,i) == true))
+      {
+        char c = 219;
+        cout << c;
+      }
+      else
+      {
+        cout << " ";
+      }
     }
     cout << endl;
-  }
-}
-void map::addLine(vector<char> line)
-{
-  grid.push_back(line);
-  sizeY++;
-  sizeX = line.size();
-}
-int main(int argc, char const *argv[])
-{
-  cout << "Welcome to Game" << endl;
-  bool fileNameCheck = false;
-  while (fileNameCheck == false)
-  {
-    cout << "Enter map file name" << endl;
-    string fileStr;
-    cin >> fileStr;
-    ifstream file;
-    file.open(fileStr);
-    if (file.is_open())
-    {
-      map m(0,0);
-      fileNameCheck = true;
-      string fileStrB;
-      while (getline(file,fileStr))
-      {
-        vector<char> temp;
-        stringstream ss(fileStr);
-        while (getline(ss,fileStrB,' '))
-        {
-          if (stoi(fileStrB) == 0)
-          {
-            temp.push_back(' ');
-          }
-          if (stoi(fileStrB) == 1)
-          {
-            temp.push_back(219);
-          }
-        }
-        m.addLine(temp);
-      }
-      m.print();
-    }
-    else
-    {
-      cout << "Error opening file" << endl;
-    }
   }
 }
