@@ -3,22 +3,28 @@
 
 #include <vector>
 #include <iostream>
+#include "quadTree.hpp"
 using namespace std;
 
 class map
 {
   public:
-    map(bool type, int level);
+    map(int type, int level);
     ~map();
-    bool getCollisionQuatTree(int x, int y);
-    bool getCollisionHashTable(int x, int y);
-    void printQT(int x, int y);
-    void printHT(int x, int y);
+    bool getCollision(int x, int y);
+    void print(int x, int y);
   private:
     int sizeX = 60;
     int sizeY = 25;
-    bool type;
-    vector<vector<bool>> deleteMe; 
+    int type;
+    vector<vector<bool>> vec;
+    quadtree q = quadtree(60-1,25-1,0,0);
+    bool getCollisionHashTable(int x, int y);
+    bool getCollision2DVector(int x, int y);
+    bool getCollisionQuatTree(int x, int y);
+    void printHT(int x, int y);
+    void printQT(int x, int y);
+    void printVec(int x, int y);
 };
 
 #endif

@@ -10,28 +10,70 @@ using namespace std;
 void menu()
 {
   cout << "=====[Welcome to Cube Game]=====" << endl;
-  cout << "Controls: WASD Or Arrow Keys To Move" << endl;
+  cout << "Guide Your Cube Through All Three Mazes To Win" << endl;
+  cout << "See The Time It Takes To Detect Collsion Below The Map" << endl;
+  cout << "=====[Controls]=====" << endl;
+  cout << "WASD Or Arrow Keys To Move" << endl;
   cout << "Press Space Bar To Jump" << endl;
-  cout << "Press Enter To Change Maps" << endl;
-  cout << "=====[Press Enter To Begin The Game]=====" << endl;
+  cout << "Press E To Change Maps" << endl;
+  cout << "=====[Select Collision Type]=====" << endl;
+  cout << "1) Two Dimensional Vector Collision" << endl;
+  cout << "2) QuadTree Collision" << endl;
+  cout << "3) HashTable Collision" << endl;
 }
 
 int main(int argc, char const *argv[])
 {
   menu();
-  cin.ignore();
-  map m(true,2);
+  string type = "";
+  while (type != "1" && type != "2" && type != "3")
+    cin >> type;
+  map m(stoi(type)-1,1);
   player p(&m);
-  m.printQT(p.getPosX(),p.getPosY());
+  m.print(p.getPosX(),p.getPosY());
   bool checker = false;
   while (checker == false)
   {
     Sleep(50);
     if (p.update() == true)
     {
-      m.printQT(p.getPosX(),p.getPosY());
+      m.print(p.getPosX(),p.getPosY());
     }
-    if (GetKeyState(VK_RETURN) < 0)
+    if (GetKeyState(0x45) < 0)
+    {
+      checker = true;
+    }
+  }
+  map mB(stoi(type)-1,2);
+  p.reset(&mB);
+  mB.print(p.getPosX(),p.getPosY());
+  checker = false;
+  Sleep(1000);
+  while (checker == false)
+  {
+    Sleep(50);
+    if (p.update() == true)
+    {
+      mB.print(p.getPosX(),p.getPosY());
+    }
+    if (GetKeyState(0x45) < 0)
+    {
+      checker = true;
+    }
+  }
+  map mC(stoi(type)-1,3);
+  p.reset(&mC);
+  mC.print(p.getPosX(),p.getPosY());
+  checker = false;
+  Sleep(1000);
+  while (checker == false)
+  {
+    Sleep(50);
+    if (p.update() == true)
+    {
+      mC.print(p.getPosX(),p.getPosY());
+    }
+    if (GetKeyState(0x45) < 0)
     {
       checker = true;
     }

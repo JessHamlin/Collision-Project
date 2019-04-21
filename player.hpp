@@ -13,9 +13,11 @@ class player
     int getPosY();
     bool update();
     player(map* m);
+    void reset(map* m);
   private:
     int posX;
     int posY;
+    int jumpCounter;
     map* m;
 };
 
