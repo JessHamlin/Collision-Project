@@ -10,7 +10,7 @@ struct HashNode
 
 class HashTable
 {
-private;
+private:
   HashNode** table;
   int size;
 
@@ -20,6 +20,6 @@ public:
   ~HashTable();
   void insert(int x, int y, bool collision);
   void remove(int x, int y);
-  int hashCode(int k)
+  int hashCode(int k);
   bool search(int x, int y);
-}
+};

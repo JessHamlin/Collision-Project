@@ -48,7 +48,7 @@ void HashTable::insert(int x, int y, bool collision)
 
   if(table[index] == 0)
   {
-    tabble[index] = temp;
+    table[index] = temp;
   }
   else
   {
