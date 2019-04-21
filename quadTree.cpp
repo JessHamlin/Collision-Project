@@ -16,7 +16,28 @@ quadtree::quadtree(int x, int y, int lowx, int lowy)
 }
 quadtree::~quadtree()
 {
-
+  deleteHelper(this);
+}
+void quadtree::print(quadtree* q)
+{
+  if (q->tr == NULL && q->tl == NULL && q->bl == NULL && q->br == NULL)
+  {
+    if (q->data != NULL)
+      cout << q->data->data << " ";
+    else
+      cout << "NULL ";
+    return;
+  }
+  cout << "EMPTY NODE " << endl;
+  print(q->tl);
+  cout << "|";
+  print(q->bl);
+  cout << "|";
+  print(q->tr);
+  cout << "|";
+  print(q->br);
+  cout << "|";
+  cout << endl;
 }
 void quadtree::deleteHelper(quadtree* q)
 {
@@ -116,7 +137,7 @@ bool quadtree::search(int x, int y, quadtree* q, bool d)
     {
       return q->data->data;
     }
-    return !q->data->data;
+    return !(q->data->data);
   }
   if ((q->maxX+q->minX)/2 >= x) // left subtree
   {
@@ -149,3 +170,11 @@ node* quadtree::makeNode(int x, int y, bool data)
   n->data = data;
   return n;
 }
+// int main()
+// {
+//   quadtree q(5,5,0,0);
+//   q.insert(1,1,true,&q);
+//   q.insert(2,1,true,&q);
+//   q.insert(3,1,true,&q);
+//   q.print(&q);
+// }

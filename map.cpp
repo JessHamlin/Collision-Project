@@ -56,14 +56,17 @@ map::map(int type, int level)
         }
         x++;
       }
+      x = 0;
       y++;
     }
+    cout << x << " " << y << endl;
   }
   //Add hashtable when type = 2
 }
 map::~map()
 {
-
+  if (type ==1)
+    q.~quadtree();
 }
 bool map::getCollision(int x, int y)
 {
@@ -84,17 +87,9 @@ bool map::getCollisionQuatTree(int x, int y) //TODO
 }
 bool map::getCollisionHashTable(int x, int y) // TODO
 {
+
 }
 void map::print(int x, int y)
-{
-  if (type == 0) //2d vector
-    printVec(x,y);
-  else if (type == 1) //quadtree
-    printQT(x,y);
-  else //hashtable
-    printHT(x,y);
-}
-void map::printVec(int x, int y)
 {
   string str = "";
   for (int i = 0; i < sizeY; i++)
@@ -114,10 +109,4 @@ void map::printVec(int x, int y)
     str = str + "\n";
   }
   cout << str;
-}
-void map::printQT(int x, int y)//TODO
-{
-}
-void map::printHT(int x, int y)//TODO
-{
 }

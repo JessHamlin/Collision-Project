@@ -28,9 +28,13 @@ int main(int argc, char const *argv[])
   string type = "";
   while (type != "1" && type != "2" && type != "3")
     cin >> type;
+  cout << "Start" << endl;
   map m(stoi(type)-1,1);
+  cout << "end" << endl;
+  cin.ignore();
   player p(&m);
   m.print(p.getPosX(),p.getPosY());
+  cin.ignore();
   bool checker = false;
   while (checker == false)
   {

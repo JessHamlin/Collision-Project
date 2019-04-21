@@ -22,9 +22,6 @@ class map
     bool getCollisionHashTable(int x, int y);
     bool getCollision2DVector(int x, int y);
     bool getCollisionQuatTree(int x, int y);
-    void printHT(int x, int y);
-    void printQT(int x, int y);
-    void printVec(int x, int y);
 };
 
 #endif
