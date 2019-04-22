@@ -15,7 +15,7 @@ HashTable::HashTable(int s)
 {
   size = s;
   table = new HashNode *[s];
-  for (int i = 0; i < size; i++) table[i] = 0;
+  for (int i = 0; i <= size; i++) table[i] = 0;
 }
 
 HashTable::~HashTable()
@@ -35,26 +35,26 @@ HashTable::~HashTable()
 
 int HashTable::hashCode(int k)
 {
-  return k % 59;
+  return k % 60;
 }
 
 void HashTable::insert(int x, int y, bool collision)
 {
-  cout << "i got" << endl;
+  //cout << "i got here" << endl;
   int index = hashCode(x);
   HashNode *temp = new HashNode();
   temp->key = collision;
   temp->x = x;
   temp->y = y;
-  cout << temp->x << endl << temp->y << endl;
+  temp->next = NULL;
+
   if(table[index] == 0)
   {
-    cout << "i got null index" << endl;
     table[index] = temp;
+    //cout << index << " is not null now" << endl;
   }
   else
   {
-    cout << "i got chaining" << endl; 
     HashNode *curr = table[index];
     HashNode *prev = NULL;
 
@@ -71,8 +71,8 @@ void HashTable::insert(int x, int y, bool collision)
       prev = curr;
       curr = curr->next;
     }
-
-    curr->next = temp;
+    prev->next = temp;
+    //cout << index << " chained" << endl;
     return;
   }
 }
@@ -138,6 +138,6 @@ bool HashTable::search(int x, int y)
       curr = curr->next;
     }
   }
-  cout << "coordinate not found" << endl;
+  //cout << "coordinate not found" << endl;
   return false;
 }
