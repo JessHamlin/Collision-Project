@@ -46,13 +46,15 @@ void HashTable::insert(int x, int y, bool collision)
   temp->key = collision;
   temp->x = x;
   temp->y = y;
-
+  cout << temp->x << endl << temp->y << endl;
   if(table[index] == 0)
   {
+    cout << "i got null index" << endl;
     table[index] = temp;
   }
   else
   {
+    cout << "i got chaining" << endl; 
     HashNode *curr = table[index];
     HashNode *prev = NULL;
 
