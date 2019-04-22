@@ -25,7 +25,7 @@ HashTable::~HashTable()
     HashNode* tmp = table[i];
     while (tmp != 0)
     {
-       HashNode* curr = tmp;
+      HashNode* curr = tmp;
       tmp = tmp->next;
       delete curr;
     }
@@ -40,6 +40,7 @@ int HashTable::hashCode(int k)
 
 void HashTable::insert(int x, int y, bool collision)
 {
+  cout << "i got" << endl;
   int index = hashCode(x);
   HashNode *temp = new HashNode();
   temp->key = collision;
