@@ -18,26 +18,23 @@ quadtree::~quadtree()
 {
   deleteHelper(this);
 }
-void quadtree::print(quadtree* q)
+int quadtree::getTotal(quadtree* q)
 {
+  int counter = 0;
   if (q->tr == NULL && q->tl == NULL && q->bl == NULL && q->br == NULL)
   {
     if (q->data != NULL)
-      cout << q->data->data << " ";
-    else
-      cout << "NULL ";
-    return;
+    {
+      if (q->data->data == true)
+        counter++;
+    }
+    return counter;
   }
-  cout << "EMPTY NODE " << endl;
-  print(q->tl);
-  cout << "|";
-  print(q->bl);
-  cout << "|";
-  print(q->tr);
-  cout << "|";
-  print(q->br);
-  cout << "|";
-  cout << endl;
+  counter = counter + getTotal(q->tl);
+  counter = counter + getTotal(q->bl);
+  counter = counter + getTotal(q->tr);
+  counter = counter + getTotal(q->br);
+  return counter;
 }
 void quadtree::deleteHelper(quadtree* q)
 {

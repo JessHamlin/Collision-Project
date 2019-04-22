@@ -62,11 +62,17 @@ map::map(int type, int level)
     cout << x << " " << y << endl;
   }
   //Add hashtable when type = 2
+
+
+
+
 }
 map::~map()
 {
   if (type ==1)
     q.~quadtree();
+  //if (type ==2)
+    //TODO call ht destructor
 }
 bool map::getCollision(int x, int y)
 {
@@ -81,7 +87,7 @@ bool map::getCollision2DVector(int x, int y)
 {
   return vec[y][x];
 }
-bool map::getCollisionQuatTree(int x, int y) //TODO
+bool map::getCollisionQuatTree(int x, int y)
 {
   return q.search(x,y,&q,false);
 }
@@ -109,4 +115,30 @@ void map::print(int x, int y)
     str = str + "\n";
   }
   cout << str;
+}
+int map::getBlockCounter()
+{
+  int counter = 0;
+  if (type == 0)
+  {
+    for (int i = 0; i < sizeY; i++)
+    {
+      for (int j = 0; j < sizeX; j++)
+      {
+        if (vec[i][j] == true)
+        {
+          counter ++;
+        }
+      }
+    }
+  }
+  else if (type == 1)
+  {
+    counter = q.getTotal(&q);
+  }
+  else
+  {
+
+  }
+  return counter;
 }

@@ -12,6 +12,7 @@ class map
     map(int type, int level);
     ~map();
     bool getCollision(int x, int y);
+    int getBlockCounter();
     void print(int x, int y);
   private:
     int sizeX = 60;

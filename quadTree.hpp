@@ -30,7 +30,7 @@ class quadtree
     ~quadtree();
     void insert(int x, int y, bool data, quadtree* q);
     bool search(int x, int y, quadtree* q, bool d);
-    void print(quadtree* q);
+    int getTotal(quadtree* q);
   private:
     node* makeNode(int x, int y, bool data);
     void deleteHelper(quadtree* q);
