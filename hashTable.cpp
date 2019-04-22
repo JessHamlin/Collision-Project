@@ -26,8 +26,8 @@ HashTable::~HashTable()
     while (tmp != 0)
     {
        HashNode* curr = tmp;
-        tmp = tmp->next;
-         delete curr;
+      tmp = tmp->next;
+      delete curr;
     }
   }
   delete[] table;
@@ -35,7 +35,7 @@ HashTable::~HashTable()
 
 int HashTable::hashCode(int k)
 {
-  return k % 25;
+  return k % 59;
 }
 
 void HashTable::insert(int x, int y, bool collision)

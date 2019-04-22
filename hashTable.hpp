@@ -1,3 +1,6 @@
+#ifndef HASHTABLE_HPP
+#define HASHTABLE_HPP
+#include <iostream>
 using namespace std;
 
 struct HashNode
@@ -5,7 +8,7 @@ struct HashNode
   bool key;
   int x;
   int y;
-  HashNode* next;
+  HashNode *next;
 };
 
 class HashTable
@@ -23,3 +26,5 @@ public:
   int hashCode(int k);
   bool search(int x, int y);
 };
+
+#endif

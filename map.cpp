@@ -1,5 +1,6 @@
 #include "map.hpp"
 #include "quadTree.hpp"
+#include "hashTable.hpp"
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -8,6 +9,7 @@ using namespace std;
 
 map::map(int type, int level)
 {
+  cout << "i got here" << endl;
   this->type = type; //0 = vector, 1 = quadtree, 2 = hashtable
   string fileStr;
   ifstream file;
@@ -62,17 +64,33 @@ map::map(int type, int level)
     cout << x << " " << y << endl;
   }
   //Add hashtable when type = 2
-
-
-
-
+  if (file.is_open() && type == 2)
+  {
+    cout << "i got there" << endl;
+    int x = 0;
+    int y = 0;
+    string fileStrB;
+    while (getline(file, fileStr))
+    {
+      stringstream ss(fileStr);
+      while (getline(ss,fileStrB,' '))
+      {
+        if (stoi(fileStrB) == 1)
+        {
+          h.insert(x,y,true);
+        }
+        x++;
+      }
+      x = 0;
+      y++;
+    }
+    cout << x << " " << y << endl;
+  }
 }
 map::~map()
 {
   if (type ==1)
     q.~quadtree();
-  //if (type ==2)
-    //TODO call ht destructor
 }
 bool map::getCollision(int x, int y)
 {
@@ -87,13 +105,14 @@ bool map::getCollision2DVector(int x, int y)
 {
   return vec[y][x];
 }
-bool map::getCollisionQuatTree(int x, int y)
+bool map::getCollisionQuatTree(int x, int y) //TODO
 {
   return q.search(x,y,&q,false);
 }
 bool map::getCollisionHashTable(int x, int y) // TODO
 {
-
+  cout << "wut";
+  return h.search(x,y);
 }
 void map::print(int x, int y)
 {
@@ -115,30 +134,4 @@ void map::print(int x, int y)
     str = str + "\n";
   }
   cout << str;
-}
-int map::getBlockCounter()
-{
-  int counter = 0;
-  if (type == 0)
-  {
-    for (int i = 0; i < sizeY; i++)
-    {
-      for (int j = 0; j < sizeX; j++)
-      {
-        if (vec[i][j] == true)
-        {
-          counter ++;
-        }
-      }
-    }
-  }
-  else if (type == 1)
-  {
-    counter = q.getTotal(&q);
-  }
-  else
-  {
-
-  }
-  return counter;
 }
