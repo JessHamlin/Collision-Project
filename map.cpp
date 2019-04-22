@@ -30,7 +30,7 @@ map::map(int type, int level)
       {
         if (stoi(fileStrB) == 0)
         {
-          temp.push_back(false);
+          temp.push_back(false); //insert a value into the 2d vec for every space in the map
         }
         if (stoi(fileStrB) == 1)
         {
@@ -53,14 +53,14 @@ map::map(int type, int level)
       {
         if (stoi(fileStrB) == 1)
         {
-          q.insert(x,y,true,&q);
+          q.insert(x,y,true,&q); //insert only full map spaces into the quadtree
         }
         x++;
       }
       x = 0;
       y++;
     }
-    cout << x << " " << y << endl;
+    //cout << x << " " << y << endl;
   }
   //Hashtable method
   if (file.is_open() && type == 2)
@@ -75,7 +75,7 @@ map::map(int type, int level)
       {
         if (stoi(fileStrB) == 1)
         {
-          h.insert(x,y,true);
+          h.insert(x,y,true);//insert only full spaces into the hash table
         }
         x++;
       }
@@ -84,7 +84,7 @@ map::map(int type, int level)
     }
   }
 }
-map::~map()
+map::~map()//delete either the quadtree or the hashtable
 {
   if (type ==1)
     q.~quadtree();
@@ -108,11 +108,11 @@ bool map::getCollisionQuatTree(int x, int y)
 {
   return q.search(x,y,&q,false);
 }
-bool map::getCollisionHashTable(int x, int y) // TODO
+bool map::getCollisionHashTable(int x, int y)
 {
     return h.search(x,y);
 }
-void map::print(int x, int y)
+void map::print(int x, int y) //calls getcollision to print the correct symbol for every map space
 {
   string str = "";
   for (int i = 0; i < sizeY; i++)
@@ -151,7 +151,7 @@ int map::getBlockCounter()
   }
   else if (type == 1)
   {
-    counter = q.getTotal(&q);
+    counter = q.getTotal(&q); //the quadtree has a built in function for this
   }
   else
   {
